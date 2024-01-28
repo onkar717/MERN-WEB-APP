@@ -1,12 +1,15 @@
+const dotenv = require('dotenv')
 const express = require('express')
 const app = express();
 
 const mongoose = require('mongoose')
 
-
+// Dotenv 
+// cmd - type null > config.env(which create a new config file)
+dotenv.config({path:'./config.env'}); // 
 
 // Database  connection
-const DB = 'mongodb+srv://thapa:onkar@cluster0.4siuari.mongodb.net/thapa_mern?retryWrites=true&w=majority'
+const DB = process.env.DATABASE;  // add to mongo url to the config file as env 
 mongoose.connect(DB ,{
     // useNewUrlParser: true,
     // useCreateIndex: true,
@@ -47,10 +50,10 @@ app.get('/singup', (req,res) => {
     res.send("Hello world from singup")
 })
 
-app.listen(3001, () => {
-    console.log("Server is Running at Port")
+PORT = 3001
+app.listen(PORT, () => {
+    console.log(`Server is Running at Port ${PORT}`)
 })
 
 
-// Dotenv 
 
