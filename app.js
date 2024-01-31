@@ -12,6 +12,7 @@ PORT =process.env.PORT;
 
 // Database  connection
 require('./DB/coonection')
+
 // to get data in JSON format
 app.use(express.json())
 // const DB = process.env.DATABASE;  // add to mongo url to the config file as env 
@@ -48,17 +49,17 @@ app.get('/about',middleware , (req,res) => {
     res.send("Hello world from about")
 })
 
-app.get('/contact', (req,res) => {
-    res.send("Hello world from contact")
-})
+// app.get('/contact', (req,res) => {
+//     res.send("Hello world from contact")
+// })
 
-app.get('/login', (req,res) => {
-    res.send("Hello world from login")
-})
+// app.get('/login', (req,res) => {
+//     res.send("Hello world from login")
+// })
 
-app.get('/singup', (req,res) => {
-    res.send("Hello world from singup")
-})
+// app.get('/singup', (req,res) => {
+//     res.send("Hello world from singup")
+// })
 
 // PORT = 3001
 app.listen(PORT, () => {
