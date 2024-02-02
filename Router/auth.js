@@ -45,11 +45,12 @@ router.post("/register", async (req, res) => {
 
 // Login
 router.post("/singin", async (req, res) => {
+
   // console.log(req.body   );
   // res.status(201).json({message:"Awsome"})
 
   try {
-    let tokenn;
+    let token;
     const { email, password } = req.body;
     if (!email || !password) {
       res.status(500).json({ error: "Please fill The form" });
@@ -60,8 +61,16 @@ router.post("/singin", async (req, res) => {
     if (userlogin) {
 
       const isMatch = await bcrypt.compare(password, userlogin.password);
+      
       const token = await userlogin.generateAuthtoken();
+
+      res.cookie("jwtoken", token ,  {
+        expires: new Date(Date.now() + 25892000000),
+        httpOnly: true
+      });
+
       console.log(token);
+
       if (!isMatch) {
 
         res.status(400).json({ message: "Invalid Credentials" });
@@ -83,30 +92,3 @@ router.post("/singin", async (req, res) => {
 
 module.exports = router;
 
-// Using Promises
-// router.post('/register' , (req , res) => {
-
-//     const {name  , email, phone , work  , password , cppassword} = req.body;
-
-//     if (!name || !email || !phone || !work  || !password || !cppassword) {
-//         return res.status(422).json({error:"Please Fill the form"})
-//     }
-
-//     User.findOne({email:email})
-//     .then((userexists) => {
-
-//         if (userexists) {
-//             return res.status(422).json({error:"Email is Already Exists"})
-//         }
-
-//         const user = new User({name, email, phone , work  , password , cppassword})
-
-//         user.save().then(() => {
-//             res.status(201).json({message:"Succesfully registered"})
-//         }).catch((err) => res.status(500).json({error:" Falied to registered"}))
-//     }).catch(err => {console.log(err)})
-// })
-
-// router.get('/contact' , (req, res) => {
-//     res.send("Hello from router contact")
-// })
